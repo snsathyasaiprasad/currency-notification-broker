@@ -1,27 +1,27 @@
 server:
-  port: 8082
+  port: 8081
 
 spring:
   application:
-    name: notification-service
+    name: currency-service
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:notification_db}
-    username: ${DB_USER:notification_user}
-    password: ${DB_PASS:notification_pass}
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:currency_db}
+    username: ${DB_USER:currency_user}
+    password: ${DB_PASS:currency_pass}
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: false
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
-    consumer:
-      group-id: notification-group
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-notification:
+currency:
+  base: USD
+  targets: EUR,GBP,INR,JPY,AUD
+  poll-interval-ms: 15000
   topic: currency-rates
 
 management:
