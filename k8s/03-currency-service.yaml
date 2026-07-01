@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-service
+  namespace: currency-broker
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: currency-service }
+  template:
+    metadata:
+      labels: { app: currency-service }
+    spec:
+      containers:
+        - name: currency-service
+          image: <your-dockerhub-username>/currency-service:1.0
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_NAME
+              value: currency_db
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASS
+              value: postgres
+            - name: KAFKA_BROKER
+              value: kafka:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: currency-service
+  namespace: currency-broker
+spec:
+  selector: { app: currency-service }
+  ports:
+    - port: 8081
+  type: NodePort
