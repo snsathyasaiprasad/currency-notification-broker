@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: <your-dockerhub-username>/notification-service:1.0
+          image: snsathyasaiprasad/notification-service:1.0
           ports:
             - containerPort: 8082
           env:

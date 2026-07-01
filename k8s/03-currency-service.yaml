@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: currency-service
-          image: <your-dockerhub-username>/currency-service:1.0
+          image: snsathyasaiprasad/currency-service:1.0
           ports:
             - containerPort: 8081
           env:
